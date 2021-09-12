@@ -279,3 +279,6 @@ static_assert(CTRE_CREATE("[\\--\\-]").match("-"sv));
 
 // msvc
 static_assert(CTRE_CREATE("[a-z]+abc").match("xxxabc"));
+
+// issue: ?+ error
+static_assert(CTRE_CREATE("a?+"));
