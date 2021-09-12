@@ -282,3 +282,14 @@ static_assert(CTRE_CREATE("[a-z]+abc").match("xxxabc"));
 
 // issue: ?+ error
 static_assert(CTRE_CREATE("a?+"));
+
+// issue: ctre::range matches an empty string causes infinite loop
+template <ctll::fixed_string pattern>
+constexpr inline bool includes(std::string_view s, 
+                               std::string_view v) {
+    for (auto&& match: ctre::range<pattern>(s)) {
+        if (v == match) return true;
+    }
+    return false;
+}
+static_assert(includes<"a|(ab)?">("aab", "ab"));
